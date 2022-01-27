@@ -1,24 +1,33 @@
 <#
     .SYNOPSIS 
-    Windows 10 Remove Bloatware apps
+    Windows 10 Software packaging wrapper
 
     .DESCRIPTION
-    Install:   PowerShell.exe -ExecutionPolicy Bypass -Command .\Invoke-Bloatware-Removal.ps1
-
+    Install:   C:\Windows\SysNative\WindowsPowershell\v1.0\PowerShell.exe -ExecutionPolicy Bypass -Command .\INSTALL-BloatwareRemoval.ps1
+    
     .ENVIRONMENT
     PowerShell 5.0
-
+    
     .AUTHOR
     Niklas Rast
 #>
 
-$ErrorActionPreference="SilentlyContinue"
+$ErrorActionPreference = "SilentlyContinue"
+#Use "C:\Windows\Logs" for System Installs and "$env:TEMP" for User Installs
 $logFile = ('{0}\{1}.log' -f "C:\Windows\Logs", [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name))
+
+#Test if registry folder exists
+if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
+    New-Item -Path "HKLM:\SOFTWARE\" -Name "OS" -Force
+}
 
 Start-Transcript -path $logFile
 
 Write-Output "Uninstalling default apps"
 $apps = @(
+    # default Windows 11 apps
+    "MicrosoftTeams"
+    
     # default Windows 10 apps
     "Microsoft.3DBuilder"
     "Microsoft.Appconnector"
@@ -45,18 +54,18 @@ $apps = @(
     #"Microsoft.Windows.Photos"
     "Microsoft.WindowsAlarms"
     #"Microsoft.WindowsCalculator"
-    #"Microsoft.WindowsCamera"
+    "Microsoft.WindowsCamera"
     "microsoft.windowscommunicationsapps"
     "Microsoft.WindowsMaps"
     "Microsoft.WindowsPhone"
     "Microsoft.WindowsSoundRecorder"
     #"Microsoft.WindowsStore"   # can't be re-installed, DO NOT REMOVE
-    #"Microsoft.Xbox.TCUI"
-    #"Microsoft.XboxApp"
-    #"Microsoft.XboxGameOverlay"
-    #"Microsoft.XboxGamingOverlay"
-    #"Microsoft.XboxSpeechToTextOverlay"
-    #"Microsoft.YourPhone"
+    "Microsoft.Xbox.TCUI"
+    "Microsoft.XboxApp"
+    "Microsoft.XboxGameOverlay"
+    "Microsoft.XboxGamingOverlay"
+    "Microsoft.XboxSpeechToTextOverlay"
+    "Microsoft.YourPhone"
     "Microsoft.ZuneMusic"
     "Microsoft.ZuneVideo"
 
@@ -147,5 +156,9 @@ foreach ($app in $apps) {
     Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage -AllUsers
     Get-AppXProvisionedPackage -Online | Where-Object DisplayName -EQ $app | Remove-AppxProvisionedPackage -Online
 }
+
+    #Register package in registry
+    New-Item -Path "HKLM:\SOFTWARE\OS\" -Name "BloatwareRemoval"
+    New-ItemProperty -Path "HKLM:\SOFTWARE\OS\BloatwareRemoval" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
 
 Stop-Transcript
