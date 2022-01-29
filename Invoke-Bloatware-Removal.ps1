@@ -24,10 +24,7 @@ if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
 Start-Transcript -path $logFile
 
 Write-Output "Uninstalling default apps"
-$apps = @(
-    # default Windows 11 apps
-    "MicrosoftTeams"
-    
+$apps = @( 
     # default Windows 10 apps
     "Microsoft.3DBuilder"
     "Microsoft.Appconnector"
@@ -159,6 +156,6 @@ foreach ($app in $apps) {
 
     #Register package in registry
     New-Item -Path "HKLM:\SOFTWARE\OS\" -Name "BloatwareRemoval"
-    New-ItemProperty -Path "HKLM:\SOFTWARE\OS\BloatwareRemoval" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
+    New-ItemProperty -Path "HKLM:\SOFTWARE\OS\BloatwareRemoval" -Name "Version" -PropertyType "String" -Value "2.0.0" -Force
 
 Stop-Transcript
