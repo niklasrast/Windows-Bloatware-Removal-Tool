@@ -24,7 +24,13 @@ if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
 Start-Transcript -path $logFile
 
 Write-Output "Uninstalling default apps"
-$apps = @( 
+$apps = @(
+    # default Windows 11 apps
+    "MicrosoftTeams"
+    "Microsoft.PowerAutomateDesktop"
+    "Microsoft.Todos"
+    "Microsoft.GamingApp"
+    
     # default Windows 10 apps
     "Microsoft.3DBuilder"
     "Microsoft.Appconnector"
@@ -39,7 +45,7 @@ $apps = @(
     "Microsoft.MicrosoftOfficeHub"
     "Microsoft.MicrosoftPowerBIForWindows"
     "Microsoft.MicrosoftSolitaireCollection"
-    #"Microsoft.MicrosoftStickyNotes"
+    "Microsoft.MicrosoftStickyNotes"
     "Microsoft.MinecraftUWP"
     "Microsoft.NetworkSpeedTest"
     "Microsoft.Office.OneNote"
@@ -51,7 +57,7 @@ $apps = @(
     #"Microsoft.Windows.Photos"
     "Microsoft.WindowsAlarms"
     #"Microsoft.WindowsCalculator"
-    "Microsoft.WindowsCamera"
+    #"Microsoft.WindowsCamera"
     "microsoft.windowscommunicationsapps"
     "Microsoft.WindowsMaps"
     "Microsoft.WindowsPhone"
@@ -65,8 +71,6 @@ $apps = @(
     "Microsoft.YourPhone"
     "Microsoft.ZuneMusic"
     "Microsoft.ZuneVideo"
-
-    # Threshold 2 apps
     "Microsoft.CommsPhone"
     "Microsoft.ConnectivityStore"
     "Microsoft.GetHelp"
@@ -75,24 +79,19 @@ $apps = @(
     "Microsoft.Office.Sway"
     "Microsoft.OneConnect"
     "Microsoft.WindowsFeedbackHub"
-
-    # Creators Update apps
     "Microsoft.Microsoft3DViewer"
     #"Microsoft.MSPaint"
-
-    #Redstone apps
     "Microsoft.BingFoodAndDrink"
     "Microsoft.BingHealthAndFitness"
     "Microsoft.BingTravel"
     "Microsoft.WindowsReadingList"
-
-    # Redstone 5 apps
     "Microsoft.MixedReality.Portal"
     "Microsoft.ScreenSketch"
     "Microsoft.XboxGamingOverlay"
     "Microsoft.YourPhone"
+    "Microsoft.Advertising.Xaml"
 
-    # non-Microsoft
+    #3-Party bloatware
     "2FE3CB00.PicsArt-PhotoStudio"
     "46928bounde.EclipseManager"
     "4DF9E0F8.Netflix"
@@ -133,18 +132,12 @@ $apps = @(
     "king.com.BubbleWitch3Saga"
     "king.com.CandyCrushSaga"
     "king.com.CandyCrushSodaSaga"
-
-    # apps which cannot be removed using Remove-AppxPackage
-    #"Microsoft.BioEnrollment"
-    #"Microsoft.MicrosoftEdge"
-    #"Microsoft.Windows.Cortana"
-    #"Microsoft.WindowsFeedback"
-    #"Microsoft.XboxGameCallableUI"
-    #"Microsoft.XboxIdentityProvider"
-    #"Windows.ContactSupport"
-
-    # apps which other apps depend on
-    "Microsoft.Advertising.Xaml"
+    "Disney.37853FC22B2CE"
+    "Clipchamp.Clipchamp"
+    "Facebook.InstagramBeta"
+    "FACEBOOK.FACEBOOK"
+    "BytedancePte.Ltd.TikTok"
+    "AmazonVideo.PrimeVideo"   
 )
 
 foreach ($app in $apps) {
