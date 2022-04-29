@@ -10,7 +10,7 @@ This repo contains an powershell scripts to remove bloatware applications from a
 
 ## Install:
 ```powershell
-PowerShell.exe -ExecutionPolicy Bypass -Command .\Invoke-Bloatware-Removal.ps1
+C:\Windows\SysNative\WindowsPowershell\v1.0\PowerShell.exe -ExecutionPolicy Bypass -Command .\Invoke-Bloatware-Removal.ps1
 ```
 
 ## Bloatware list:
