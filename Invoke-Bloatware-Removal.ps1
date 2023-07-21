@@ -17,8 +17,8 @@ $ErrorActionPreference = "SilentlyContinue"
 $logFile = ('{0}\{1}.log' -f "C:\Windows\Logs", [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name))
 
 #Test if registry folder exists
-if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
-    New-Item -Path "HKLM:\SOFTWARE\" -Name "OS" -Force
+if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\COMPANY")) {
+    New-Item -Path "HKLM:\SOFTWARE\" -Name "COMPANY" -Force
 }
 
 Start-Transcript -path $logFile
@@ -148,7 +148,7 @@ foreach ($app in $apps) {
 }
 
     #Register package in registry
-    New-Item -Path "HKLM:\SOFTWARE\OS\" -Name "BloatwareRemoval"
-    New-ItemProperty -Path "HKLM:\SOFTWARE\OS\BloatwareRemoval" -Name "Version" -PropertyType "String" -Value "2.0.0" -Force
+    New-Item -Path "HKLM:\SOFTWARE\COMPANY\" -Name "BloatwareRemoval"
+    New-ItemProperty -Path "HKLM:\SOFTWARE\COMPANY\BloatwareRemoval" -Name "Version" -PropertyType "String" -Value "2.0.0" -Force
 
 Stop-Transcript
